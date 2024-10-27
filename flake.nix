@@ -10,11 +10,12 @@
     inputs.flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import inputs.nixpkgs {inherit system;};
     in {
-      packages = {
-        default = pkgs.writeTextFile {
-          name = "hello-world.txt";
-          text = "Hello, world!";
-        };
+      cliquers = {
+        file = {contents}:
+          pkgs.writeTextFile {
+            name = "cliquers";
+            text = contents;
+          };
       };
     });
 }

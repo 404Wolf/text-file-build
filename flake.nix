@@ -10,10 +10,16 @@
     inputs.flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import inputs.nixpkgs {inherit system;};
     in {
+      packages = {
+        file = pkgs.writeTextFile {
+          name = "filename";
+          text = "this is the file contents";
+        };
+      };
       paramabuilds = {
         file = {contents}:
           pkgs.writeTextFile {
-            name = "cliquers";
+            name = "filename";
             text = contents;
           };
       };

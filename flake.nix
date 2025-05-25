@@ -1,20 +1,25 @@
 {
+  description = "A simple text file builder";
+
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
-    flake-utils = {
-      url = "github:numtide/flake-utils";
-    };
+    flake-utils.url = "github:numtide/flake-utils";
   };
 
-  outputs = {...} @ inputs:
-    inputs.flake-utils.lib.eachDefaultSystem (system: let
-      pkgs = import inputs.nixpkgs {inherit system;};
+  outputs = {
+    self,
+    nixpkgs,
+    flake-utils,
+  }:
+    flake-utils.lib.eachDefaultSystem (system: let
+      pkgs = nixpkgs.legacyPackages.${system};
     in {
-      cliquers = {
-        file =  {
-          modules = [./module.nix];
-          specialArgs = {inherit pkgs;};
-        };
+      cliquers.${system} = {
+        # This will match the path expected by your Builder class
+        "paramabuilds.file" = {first-line ? "default text"}:
+          pkgs.runCommand "generated-file" {} ''
+            echo "${first-line}" > $out
+          '';
       };
     });
 }

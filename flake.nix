@@ -10,7 +10,7 @@
     inputs.flake-utils.lib.eachDefaultSystem (system: let
       pkgs = import inputs.nixpkgs {inherit system;};
     in {
-      paramabuilds = {
+      cliquers = {
         file =  {
           modules = [./module.nix];
           specialArgs = {inherit pkgs;};

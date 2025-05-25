@@ -14,11 +14,10 @@
     flake-utils.lib.eachDefaultSystem (system: let
       pkgs = nixpkgs.legacyPackages.${system};
     in {
-      cliquers.${system} = {
-        # This will match the path expected by your Builder class
-        "paramabuilds.file" = {first-line ? "default text"}:
+      cliquers = {
+        "paramabuilds.file" = {text ? "default text"}:
           pkgs.runCommand "generated-file" {} ''
-            echo "${first-line}" > $out
+            echo "text" > $out
           '';
       };
     });

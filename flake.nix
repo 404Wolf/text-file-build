@@ -15,7 +15,7 @@
       pkgs = nixpkgs.legacyPackages.${system};
     in {
       cliquers = {
-        "paramabuilds.file" = {text ? "default text"}:
+        file = {text ? "default text"}:
           pkgs.runCommand "generated-file" {} ''
             echo "text" > $out
           '';
